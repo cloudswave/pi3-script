@@ -1,0 +1,2 @@
+deb http://mirrors.ustc.edu.cn/raspbian/raspbian/ stretch main contrib non-free rpi 
+ deb-src http://mirrors.ustc.edu.cn/raspbian/raspbian/ stretch main contrib non-free rpi

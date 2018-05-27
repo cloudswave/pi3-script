@@ -1,0 +1,16 @@
+server {
+listen 80 default_server;
+
+location / {
+    root /home/pi/www;
+    index index.php index.html;
+    try_files $uri $uri/ =404;
+}
+location ~\.php$ {
+    root /home/pi/www;
+    fastcgi_pass   unix:/run/php/php7.0-fpm.sock;#socket mode
+    #fastcgi_pass   127.0.0.1:9000;#tcp mode
+    fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    include        fastcgi_params;
+}
+}
