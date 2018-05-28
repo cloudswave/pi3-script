@@ -10,7 +10,7 @@ echo "node start" >> ./startup.log
 forever start -w ./pi3-script/node_web/app.js
 
 # nas 
-echo `samba restart >> ./startup.log
+echo samba restart >> ./startup.log
 /etc/init.d/samba restart &
 
 # frpc 
