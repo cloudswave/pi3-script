@@ -126,10 +126,10 @@ function tools(){
     sudo /etc/init.d/samba restart
 }
 #------------main
-#update
-#startup
-#base
-#dev
+update
+startup
+base
+dev
 tools
 
 # Done
