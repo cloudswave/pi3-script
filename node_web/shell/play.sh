@@ -1,0 +1,3 @@
+echo `pwd` >> /home/pi/tmp.log
+killall mpg123
+nohup mpg123 http://dl.stream.qqmusic.qq.com/M800003LqdzX0edhb9.mp3\?vkey\=86A608E8E95C6BC8E99FA203929DA5DCB319FE9BF55FD49FA11422952DD01EB67FE26E676BA776AA87BF83803410A9D41B4045CF67C2957B\&guid\=5150825362\&fromtag\=1 >> /dev/null &
