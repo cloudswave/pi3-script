@@ -1,0 +1,78 @@
+- alias: weather_report
+  initial_state: true
+  trigger:
+    - platform: time
+      hours: 8
+      minutes: 20
+      seconds: 0
+      
+  condition:
+    condition: numeric_state
+    entity_id: sensor.weather_temperature
+    above: 0  #判断气温是否高于34°C
+        
+  action:
+    - service: tts.baidu_say
+      data_template:
+        entity_id: media_player.vlc
+        message: "现在播报天气信息。温度，{{states('sensor.weather_temperature')}}°C, 湿度{{states('sensor.weather_humidity')}}，风速{{states('sensor.weather_wind_speed')}}, 气压{{states('sensor.weather_pressure')}}"
+
+- alias: notify publish
+  #trigger:
+    #at: '8:00'
+    #platform: time
+  trigger:
+    platform: homeassistant
+    # Event can also be 'shutdown'
+    event: start
+  action:
+    service: notify.my_notify
+    data:
+      title: 提示
+      message: '智能家居系统已经启动'
+      target: g-8d131ed3-fdef-4d4b-854e-9a26f02b
+
+# 播放        
+- alias: musicbox_play
+  trigger:
+      platform: time
+      hours: 8
+      minutes: 30
+      seconds: 0
+      
+  action:
+    service: shell_command.musicbox_play
+    
+- alias: musicbox_stop
+  trigger:
+      platform: time
+      hours: 10
+      minutes: 30
+      seconds: 0
+      
+  action:
+    service: shell_command.musicbox_kill
+
+# 定时关机       
+- alias: pi_shutdown
+  trigger:
+      platform: time
+      hours: 11
+      minutes: 30
+      seconds: 0
+      
+  action:
+    service: shell_command.pi_shutdown
+    
+- alias: lifesuggest
+  trigger:
+    - event: sunrise
+      platform: sun
+
+  condition: []
+  action:
+    data_template:
+      message: >
+        今天{{ states.sensor.suggestion_trav.state}}外出旅行，{{ states.sensor.suggestion_trav.attributes["建议"] }}，祝您旅途愉快
+    service: tts.baidu_say
+    

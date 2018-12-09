@@ -1,0 +1,12 @@
+weather:
+  - platform: heweather_forecast
+    city: 上海
+    appkey: 41d02a36c1c9455ab84e3334a4623021
+
+
+group:
+  weather:
+    view: no 
+    name: 本地天气
+    entities:
+      - weather.localweather

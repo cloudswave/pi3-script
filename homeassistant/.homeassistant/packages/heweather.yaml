@@ -1,0 +1,45 @@
+sensor: 
+  - platform: heweather
+    city: 上海
+    appkey: 41d02a36c1c9455ab84e3334a4623021
+    options:
+      - temprature
+      - humidity
+      - pm25
+      - no2
+      - so2
+      - co
+      - o3
+      - qlty
+
+  - platform: heweather_hourlyforecast
+    city: 上海
+    appkey: 41d02a36c1c9455ab84e3334a4623021
+    options:
+      - 3hour
+      - 6hour
+      - 9hour
+
+group:
+  heweatherAQI: 
+    view: no
+    name: 空气质量
+    entities:
+      #- sensor.sensor.heweather_humidity
+      #- sensor.heweather_temperature
+      - sensor.heweather_qlty 
+      - sensor.heweather_no2 
+      - sensor.heweather_pm25
+      - sensor.heweather_co 
+      - sensor.heweather_so2 
+      - sensor.heweather_o3
+  hourlyforecast:
+    view: no
+    name: 小时天气预报
+    entities:
+      - sensor.hourly_forcast_3 
+      - sensor.hourly_forcast_6 
+      - sensor.hourly_forcast_9
+
+
+        

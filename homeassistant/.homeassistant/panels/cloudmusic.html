@@ -1,0 +1,48 @@
+<dom-module id='ha-panel-cloudmusic'>
+  <template>
+    <style include="ha-style">
+        #musicDiv {
+            width: 100%;
+            position: absolute;
+            top: 64px;
+            bottom: 0px;
+            left: 0px;
+        }
+        #hapwd {display:none;}
+    </style>
+
+    <app-toolbar hidden$='{{!showAppToolbar}}'>
+      <ha-menu-button narrow='[[narrow]]' show-menu='[[showMenu]]'></ha-menu-button>
+      <div main-title>[[panel.title]]</div>
+    </app-toolbar>
+    <div id="musicDiv">
+      <iframe src="local/music/index.html" width="100%" height="100%" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+    </div>
+  </template>
+</dom-module>
+
+<script>
+Polymer({
+    is: 'ha-panel-cloudmusic',
+    properties: {
+      hass: {
+        type: Object,
+      },
+      panel: {
+        type: Object,
+      },
+      narrow: {
+        type: Boolean,
+        value: true,
+      },
+      showMenu: {
+        type: Boolean,
+        value: true,
+      },
+      showAppToolbar: {
+        type: Boolean,
+        value: true,
+      }
+    }
+});
+</script>

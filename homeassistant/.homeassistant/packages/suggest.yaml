@@ -1,0 +1,27 @@
+sensor:
+  - platform: lifesuggestion
+    city: 上海
+    appkey: 41d02a36c1c9455ab84e3334a4623021
+    options:
+      - air
+      - comf
+      - cw
+      - drsg
+      - flu
+      - sport
+      - trav
+      - uv
+
+group:
+  suggestion:
+    view: no
+    name: 品质生活
+    entities: 
+      - sensor.suggestion_air
+      - sensor.suggestion_comf
+      - sensor.suggestion_cw
+      - sensor.suggestion_drsg
+      - sensor.suggestion_flu
+      - sensor.suggestion_sport
+      - sensor.suggestion_trav
+      - sensor.suggestion_uv
