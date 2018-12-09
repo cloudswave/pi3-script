@@ -1,6 +1,6 @@
 homeassistant:
   # Name of the location where Home Assistant is running
-  name: Home
+  name: 朱小波的家
   # Location required to calculate the time the sun rises and sets
   latitude: 31.0456
   longitude: 121.3997
@@ -12,19 +12,25 @@ homeassistant:
   time_zone: Asia/Shanghai
   # Customization file
   customize: !include customize.yaml
+  packages: !include_dir_named packages
 
 # Show links to resources in log and frontend
 introduction:
 
 # Enables the frontend
 frontend:
-
+  extra_html_url:
+    - /local/custom_ui/state-card-custom-ui.html
+    #- /local/custom_ui/state-card-diy.html
+  extra_html_url_es5:
+    - /local/custom_ui/state-card-custom-ui-es5.html
+    #- /local/custom_ui/state-card-diy.html
 # Enables configuration UI
 config:
 
 http:
   # Secrets are defined in the file secrets.yaml
-  # api_password: !secret http_password
+  api_password: bb900102
   # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
   # base_url: example.duckdns.org:8123
 
@@ -75,13 +81,11 @@ tts:
     app_id: 11337674 
     api_key: XtR74Qq3EvCRQNiLT7fHGna1
     secret_key: XMeYTwjGOI4k6hC8PkTqM9nRew3Ehszt 
-    #speed：语速0-9（缺省5）
-    #pitch：语调0-9（缺省5）
+    #speed：语速0-9（缺省5）pitch：语调0-9（缺省5）
     volume: 15 #音量0-15（缺省5）
     #person：声音（0：女，1：男，3：百度合成，4：百度合成，缺省0）
     speed: 5
     pitch: 5
-    volume: 15
     person: 0
     
 media_player :
@@ -91,6 +95,33 @@ media_player :
 # Cloud
 cloud:
 
-group: !include groups.yaml
+switch:
+  platform: wake_on_lan
+  friendly_name: 电脑电源
+  mac_address: "00-E0-70-6B-40-33"
+  host: "192.168.1.142"
+  turn_off:
+    service: shell_command.turn_off_pc
+
+notify:
+  - name: my_notify
+    platform: alert_over
+    from_source: s-003b4305-8753-4290-9b56-3ec11cc7
+
+shell_command:
+    musicbox_play: killall shairport ; su - pi -c 'tmux new-session -d -s  musicbox musicbox -c "?"'
+    musicbox_kill: /home/pi/shairport/shairport -a pi -d ; su - pi -c 'tmux kill-session -t musicbox'
+    pi_shutdown: halt
+    turn_off_pc: 'curl -X GET http://192.168.1.142:8000/?action=System.Shutdown'
+
+group     : !include groups.yaml
 automation: !include automations.yaml
-script: !include scripts.yaml
+script    : !include scripts.yaml
+
+logger:
+  default: info
+  logs:
+    homeassistant.components.shell_command: info
+
+
+  

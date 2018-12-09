@@ -1,0 +1,35 @@
+switch:
+  platform: command_line
+  switches:
+    kodi:
+      friendly_name: 机顶盒
+      command_off: "killall kodi"
+      command_on: "su - pi -c 'kodi'"
+    motion:
+      friendly_name: 视频监控
+      command_off: "killall motion"
+      command_on: "motion -b"
+    home_assistant_system_shutdown:
+      friendly_name: pi关机
+      command_off: "sudo poweroff"
+      command_state: "echo 0"
+    pi_restart:
+      friendly_name: pi重启
+      command_off: "sudo reboot"
+      command_state: "echo 0"
+    pi_usb_mount:
+      friendly_name: 挂载硬盘
+      command_off: "sudo umount /home/pi/share/my_usb"
+      command_on: "sudo mount /dev/sda1 /home/pi/share/my_usb -w"
+    pi_baiduyun:
+      friendly_name: 百度云同步
+      command_off: "killall bypy"
+      command_on: "bypy syncdown / /home/pi/share/my_usb/ >> /home/pi/share/my_usb/sync.log &"
+
+group:
+  switch1:
+    name: 开关组
+    view: no
+    entities:
+      - switch.home_assistant_system_shutdown
+      - switch.motion

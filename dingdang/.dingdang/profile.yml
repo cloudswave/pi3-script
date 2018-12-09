@@ -1,0 +1,197 @@
+robot_name: 'DINGDANG'  # 必须使用大写
+robot_name_cn: '佩奇'
+first_name: '小波'
+last_name: '朱'
+timezone: HKT
+location: '上海'
+
+# 是否接入微信
+wechat: true
+
+# 当微信发送语音时，是直接播放语音还是执行语音命令？
+# true：直接播放
+# false：执行语音命令（只支持百度STT，其他两种STT识别不准）
+wechat_echo: false
+
+# 除了自己之外，还能响应 echo 指令的好友微信名单
+# 如果填写 ['ALL'] 表示响应所有微信好友
+# 如果填写 [] 表示不响应任何好友
+wechat_echo_text_friends: ['ALL']#['小Q', 'HaHack']
+
+# 除了自己之外，还能直接播放语音的好友微信名单
+# 如果填写 ['ALL'] 表示播放所有微信好友的语音
+# 如果填写 [] 表示不播放任何好友的语音
+wechat_echo_voice_friends: ['任性又如何']
+
+# 当有邮件时，是否朗读邮件标题
+read_email_title: true
+
+# 当内容过长（> 200个字）时，是否继续朗读
+# true：读
+# false：改为发送内容
+read_long_content: false
+
+# 最长朗读内容（仅当 read_long_content 为 false 时有效）
+max_length: 200
+
+# 是否使用邮箱发送长内容而不是微信
+prefers_email: false
+
+# 勿扰模式，该时间段内不执行通知检查
+do_not_bother:
+    enable: true # 开启勿扰模式
+    since: 23    # 开始时间
+    till: 9      # 结束时间，如果比 since 小表示第二天
+
+# 语音合成服务配置
+# 可选值：
+# baidu-tts     - 百度语音识别
+# iflytek-tts   - 讯飞语音合成
+# ali-tts       - 阿里语音合成
+# google-tts    - 谷歌语音合成
+tts_engine:  baidu-tts
+
+# STT 服务配置
+# 可选值：
+# sphinx        - pocketsphinx离线识别引擎（需训练，参考修改唤醒词教程）
+# baidu-stt     - 百度在线语音识别
+# iflytek-stt   - 讯飞语音识别
+# ali-stt       - 阿里语音识别
+# google-stt    - 谷歌语音合成
+stt_engine: baidu-stt
+
+# 离线唤醒 SST 引擎
+# 可选值：
+# sphinx        - pocketspinx离线唤醒                                                                                                                                           
+# snowboy-stt   - snowboy离线唤醒
+stt_passive_engine: snowboy-stt
+
+# pocketsphinx 唤醒SST引擎（默认）
+pocketsphinx:
+    fst_model: '/home/pi/g014b2b/g014b2b.fst'
+
+# snowboy 唤醒SST引擎（可选）
+# https://snowboy.kitt.ai/dashboard
+snowboy:
+    model: '/home/pi/.dingdang/pq.pmdl'  # 唤醒词模型
+    sensitivity: "0.5"  # 敏感度
+
+# 百度语音服务
+# http://yuyin.baidu.com/
+baidu_yuyin:
+    api_key: 'XtR74Qq3EvCRQNiLT7fHGna1'
+    secret_key: 'XMeYTwjGOI4k6hC8PkTqM9nRew3Ehszt'
+    per: 0  # 发音人选择 0：女生；1：男生；3：度逍遥；4：度丫丫
+
+# 讯飞语音服务
+# api_id 及 api_key 需前往
+# http://aiui.xfyun.cn/webApi
+# 注册获取（注意创建的是WebAPI应用），仅使用语音合成无需注册
+# 然后将主板的ip地址添加进ip白名单（建议使用中转服务器的ip地址 101.132.139.80）
+iflytek_yuyin:
+    api_id: '填写你的讯飞应用的Api ID'
+    api_key: '填写你的讯飞应用的Api Key'  # 没看到这个说明不是注册的WebAPI应用，请改注册个WebAPI应用
+    vid: '67100' #语音合成选项： 60120为小桃丸 67100为颖儿 60170为萌小新 更多音色见wiki
+    url: 'http://api.musiiot.top/stt.php' # 白名单ip中转服务器（可选）
+
+# 阿里云语音
+# ak_id及ak_secret需前往
+# https://data.aliyun.com/product/nls
+# 注册获取
+ali_yuyin:
+    ak_id: '填写你的阿里云应用的AcessKey ID'
+    ak_secret: '填写你的阿里云应用的AcessKey Secret'
+    voice_name: 'xiaoyun' #xiaoyun为女生，xiaogang为男生
+
+# 谷歌语音
+# api_key 的获取方式：
+# 1. Join the Chromium Dev group:
+#     https://groups.google.com/a/chromium.org/forum/?fromgroups#!forum/chromium-dev
+# 2. Create a project through the Google Developers console:
+#     https://console.developers.google.com/project
+# 3. Select your project. In the sidebar, navigate to "APIs & Auth." Activate
+#     the Speech API.
+# 4. Under "APIs & Auth," navigate to "Credentials." Create a new key for
+#     public API access.
+google_yuyin:
+    language: 'zh-CN'
+    api_key: ''
+
+# 聊天机器人
+# 可选值：
+# tuling    - 图灵机器人
+# emotibot  - 小影机器人
+robot: tuling
+
+# 图灵机器人
+# http://www.tuling123.com
+tuling:
+    tuling_key: 'c380ed8f2880443c84892ace36ba6bad'
+
+# 小影机器人
+# http://botfactory.emotibot.com/
+emotibot:
+    appid: '填写你的 emotibot appid'
+    active_mode: true  # 是否主动说更多点话
+
+# 邮箱
+# 如果使用网易邮箱，还需设置允许第三方客户端收发邮件
+email:
+    enable: true
+    address: 'ethanzhu_zxb@163.com'
+    password: 'zGrTth66'  # 如果是网易邮箱，须填写应用授权密码而不是登录密码！
+    smtp_server: 'smtp.163.com'
+    smtp_port: '25'  # 这里填写非SSL协议端口号
+    imap_server: 'imap.163.com'
+    imap_port: '143'  # 这里填写非SSL协议端口号
+
+
+# 拍照
+# 需接入摄像头才能使用
+camera:
+    enable: true
+    dest_path: "/home/pi/camera" # 保存目录
+    quality: 5            # 成像质量（0~100）
+    vertical_flip: true     # 竖直翻转
+    horizontal_flip: false  # 水平翻转
+    count_down: 3           # 倒计时（秒），仅当开启倒计时时有效
+    sendToUser: true        # 拍完照是否发送到邮箱/微信    
+    sound: true             # 是否有拍照音效
+    usb_camera: true       # 是否使用USB摄像头（默认是树莓派5MP摄像头）
+
+
+#######################
+# 第三方插件的配置
+#######################
+
+# 在这里放第三方插件的配置
+# https://github.com/wzpan/dingdang-contrib
+# 网易音乐
+netease_music:
+    account: 'ethanzhu_zxb@163.com' # 只支持手机账户
+    password: 'bb900102'
+    report: true    # 是否播报即将播放的音乐
+    local_path: '/home/pi/Music/'  # 本地音乐目录
+    local_default: True  # 默认播放本地音乐
+# 新闻头条
+# 聚合数据新闻头条API
+# https://www.juhe.cn/docs/api/id/235
+headline_news:
+    key: 'AppKey'
+
+# Email My PC
+emailmypc:
+    pc_email: '764724624@qq.com'
+    button: '自定义快捷键'
+    cmd: '自定义指令'
+    
+# WOL启动
+wol:
+    ip: '192.168.1.255' #局域网广播地址或指定电脑IP地址
+    mac: '00-E0-70-6B-40-33'
+# 天气
+# 使用心知天气的接口
+# https://www.seniverse.com/
+weather:
+    key: 'muzyqkhksgdusakq'
+    location: '上海'

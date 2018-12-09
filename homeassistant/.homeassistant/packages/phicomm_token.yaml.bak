@@ -1,0 +1,20 @@
+﻿sensor:
+  - platform: PhicommTokenGetter
+    name: tokengetter
+    phicommAccount : 17621551771
+    phicommPassowrd: bb900102
+    tokenPath: '/config/phicomm_token.txt'
+
+input_boolean:
+  phicomm_token_reset:
+    name: 重试
+    icon: mdi:lock-reset
+    initial: false
+      
+group:
+  tokengetter:
+    name: 斐讯Token获取
+    view: no
+    entities:
+      - input_boolean.phicomm_token_reset
+   

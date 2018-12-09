@@ -12,8 +12,7 @@ hass --open-ui
 sudo apt-get install vlc-nox
 sudo usermod -a -G audio pi
 
-cp ./*.yaml /home/pi/.homeassistant/
-cp -r ./custom_components /home/pi/.homeassistant/
+cp ./homeassistant /home/pi/.homeassistant/
 
 # 以下代码可以放到开机自启动shell脚本中
 #killall hass

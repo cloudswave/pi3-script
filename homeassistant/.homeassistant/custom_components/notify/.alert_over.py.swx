@@ -1,0 +1,5 @@
+panel_custom:
+  - name: cloudmusic
+    sidebar_title: 云音乐
+    sidebar_icon: mdi:music
+    url_path: music
