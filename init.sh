@@ -96,7 +96,9 @@ function php_nginx_kode(){
     /etc/init.d/php7-fpm restart
     /etc/init.d/nginx restart
     wget http://static.kodcloud.com/update/download/kodexplorer4.25.zip
-    unzip kodexplorer4.25.zip /home/pi/www/
+    unzip kodexplorer4.25.zip -d /home/pi/www/
+	 su -c 'setenforce 0'
+	 chmod -R 777 /home/pi/www/
     exit
     
 }
