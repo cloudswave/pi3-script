@@ -39,7 +39,7 @@ function states(){
               }
           });
           var curif = (curPlayer==undefined || curPlayer==0) ? ' class="cur"' : '';
-          $(".player-list").html('<li'+curif+' entity_id="0"><i></i>本机</li>'+players);  
+          rem.playerList.html('<li'+curif+' entity_id="0"><i></i>本机</li>'+players);  
           $(".player-list li").bind("click",function(){
               var entityId = $(this).attr('entity_id');
               var last_entityId = storage.getItem("curPlayer");
@@ -72,8 +72,9 @@ function play_media(entityId,mediaId){
       success: function(result){
           clearInterval(timer);
           audioPlay();
-          update_bar(0,200);
-          setTimeout(function() {clearInterval(timer);update_bar(10,play_states(storage.getItem("curPlayer")));},10000);
+          update_bar(0,rem.audio[0].duration);
+          //console.log(rem.audio[0].duration);
+          //setTimeout(function() {clearInterval(timer);update_bar(10,play_states(storage.getItem("curPlayer")));},10000);
       }
   });
 }
@@ -92,6 +93,19 @@ function player_op(entityId,op){
   });
 }
 
+function player_volset(entityId,volume_level){
+  $.ajax({
+      type: "POST",
+      url: "/api/services/media_player/volume_set",
+      data: '{"entity_id": "'+ entityId +'","volume_level": "'+ volume_level +'"}',
+      beforeSend: function(request) {
+          request.setRequestHeader("authorization", tokens.token_type + " " + tokens.access_token);
+      },
+      success: function(result){
+      }
+  });
+}
+
 function update_bar(media_position,media_duration){
    s = media_position;
    timer = setInterval(function(){
@@ -99,7 +113,7 @@ function update_bar(media_position,media_duration){
       music_bar.lock(true);
       music_bar.goto(s / media_duration);
       scrollLyric(s);
-      if(s == media_duration){
+      if(s == parseInt(media_duration)){
           autoNextMusic();
           clearInterval(timer);
       }

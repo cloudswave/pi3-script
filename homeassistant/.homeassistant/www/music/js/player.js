@@ -73,8 +73,8 @@ function pause() {
             clearInterval(timer);
             player_op(entityId,"media_play");
             audioPlay();
-            update_bar(0,200);
-            setTimeout(function() {clearInterval(timer);update_bar(10,play_states(storage.getItem("curPlayer")));},10000);
+            update_bar(0,rem.audio[0].duration);
+            //setTimeout(function() {clearInterval(timer);update_bar(10,play_states(storage.getItem("curPlayer")));},10000);
         }else{
             rem.audio[0].play();
         }
@@ -286,6 +286,12 @@ function playList(id) {
     }
 }
 
+//IOS下强制播放
+function forceSafariPlayAudio() {
+    rem.audio[0].load();
+    rem.audio[0].play();
+}
+
 // 初始化 Audio
 function initAudio() {
     rem.audio = $('<audio></audio>').appendTo('body');
@@ -294,10 +300,18 @@ function initAudio() {
     rem.audio[0].volume = volume_bar.percent;
     // 绑定歌曲进度变化事件
     rem.audio[0].addEventListener('timeupdate', updateProgress);   // 更新进度
-    rem.audio[0].addEventListener('play', audioPlay); // 开始播放了
+    rem.audio[0].addEventListener('play', function() {
+        audioPlay();
+        // 当 audio 能够播放后, 移除这个事件
+        window.removeEventListener('touchstart', forceSafariPlayAudio, false);
+    }); // 开始播放了
     rem.audio[0].addEventListener('pause', audioPause);   // 暂停
     $(rem.audio[0]).on('ended', autoNextMusic);   // 播放结束
     rem.audio[0].addEventListener('error', audioErr);   // 播放器错误处理
+    
+    // 由于 iOS Safari 限制不允许 audio autoplay, 必须用户主动交互(例如 click)后才能播放 audio,
+    // 因此我们通过一个用户交互事件来主动 play 一下 audio.
+    window.addEventListener('touchstart', forceSafariPlayAudio, false);
 }
 
 
@@ -339,6 +353,8 @@ function play(music) {
         var entityId = storage.getItem("curPlayer");
         if(entityId.indexOf("media_player.") >= 0 ){
             rem.audio[0].load();
+            rem.audio.attr('src', music.url);
+            //console.log(rem.audio[0].duration);
             play_media(entityId,music.url);
         }else{
             clearInterval(timer);
@@ -383,6 +399,11 @@ function vBcallback(newVal) {
     }
     
     if(newVal === 0) $(".btn-quiet").addClass("btn-state-quiet");
+    
+    var entityId = storage.getItem("curPlayer");
+    if(entityId.indexOf("media_player.") >= 0 ){
+        player_volset(entityId,newVal);
+    }
     
     playerSavedata('volume', newVal); // 存储音量信息
 }

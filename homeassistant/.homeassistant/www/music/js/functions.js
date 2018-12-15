@@ -39,9 +39,10 @@ $(function(){
     if(rem.isMobile) {  // 加了滚动条插件和没加滚动条插件所操作的对象是不一样的
         rem.sheetList = $("#sheet");
         rem.mainList = $("#main-list");
+        rem.playerList = $(".player-list");
     } else {
         // 滚动条初始化(只在非移动端启用滚动条控件)
-        $("#main-list,#sheet").mCustomScrollbar({
+        $("#main-list,#sheet,.player-list").mCustomScrollbar({
             theme:"minimal",
             advanced:{
                 updateOnContentResize: true // 数据更新后自动刷新滚动条
@@ -49,7 +50,8 @@ $(function(){
         });
         
         rem.sheetList = $("#sheet .mCSB_container");
-        rem.mainList = $("#main-list .mCSB_container");  
+        rem.mainList = $("#main-list .mCSB_container");
+        rem.playerList = $(".player-list .mCSB_container");  
     }
     
     addListhead();  // 列表头
