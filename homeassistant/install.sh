@@ -2,7 +2,8 @@
 #https://home-assistant.cc/installation/general/
 
 #Home Assistant 官方推荐使用 Python 虚拟环境安装 Home Assistant 以避免影响生产环境。
-cp -r ./.homeassistant ~/.homeassistant #复�配�文�
+basepath=$(cd `dirname $0`; pwd)
+ln -s $basepath/.homeassistant ~/.homeassistant #复�配�文�
 
 cd ~/
 sudo apt-get install python3 python3-venv python3-pip

@@ -15,7 +15,7 @@ $(".progress").on("click",".btn-airplayer", function() {
 });
 
 var storage=window.localStorage;
-var authToken = storage.getItem("authToken");
+var tokens = JSON.parse(storage.getItem("hassTokens"));
 var timer=null;
 var s=0;
 
@@ -24,7 +24,7 @@ function states(){
       type: "GET",
       url: "/api/states",
       beforeSend: function(request) {
-          request.setRequestHeader("x-ha-access", authToken);
+          request.setRequestHeader("authorization", tokens.token_type + " " + tokens.access_token);
       },
       success: function(result) {
           var json = eval(result);
@@ -67,7 +67,7 @@ function play_media(entityId,mediaId){
       url: "/api/services/media_player/play_media",
       data: '{"entity_id": "'+ entityId +'","media_content_id":"'+ musicUrl +'","media_content_type":"music"}',
       beforeSend: function(request) {
-          request.setRequestHeader("x-ha-access", authToken);
+          request.setRequestHeader("authorization", tokens.token_type + " " + tokens.access_token);
       },
       success: function(result){
           clearInterval(timer);
@@ -84,7 +84,7 @@ function player_op(entityId,op){
       url: "/api/services/media_player/"+ op,
       data: '{"entity_id": "'+ entityId +'"}',
       beforeSend: function(request) {
-          request.setRequestHeader("x-ha-access", authToken);
+          request.setRequestHeader("authorization", tokens.token_type + " " + tokens.access_token);
       },
       success: function(result){
           
@@ -113,7 +113,7 @@ function play_states(entityId){
         url: "/api/states/"+ entityId +"?r="+Math.random(),
         async:false,
         beforeSend: function(request) {
-            request.setRequestHeader("x-ha-access", authToken);
+            request.setRequestHeader("authorization", tokens.token_type + " " + tokens.access_token);
         },
         success: function(result){
             media_duration = result.attributes.media_duration;
