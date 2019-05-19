@@ -1,4 +1,5 @@
 #!/bin/bash
+#readme http://www.senra.me/solutions-to-aria2-bt-metalink-download-slowly
 killall aria2c
 path=/home/pi/pi3-script/aria2/aria2.conf
 list=`wget -qO- https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt|awk NF|sed ":a;N;s/\n/,/g;ta"`
