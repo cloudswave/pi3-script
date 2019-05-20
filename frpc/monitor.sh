@@ -1,14 +1,13 @@
 #!/bin/bash
 LOG_FILE="/home/pi/boot.log"
-function logit()
-{
-       	echo "[${USER}][`date`] - ${*}" >> ${LOG_FILE}
+logit(){
+    echo $(date "+%Y-%m-%d %H:%M:%S"): ${*} >> ${LOG_FILE}
 }
 while true;do
     count=`ps -ef|grep frpc|grep -v grep`
         if [ "$?" != "0" ];then
 		logit "no frpc, run frpc"
-		/home/pi/bin/frpc -c /home/pi/frpc.ini
+		/home/pi/bin/frpc -c /home/pi/bin/frpc.ini
 	#else
 		#logit "frpc is runing..."
 	fi
