@@ -4,6 +4,7 @@ BACKUP_FOLDERS=(
 '/home/pi/bin/'
 '/home/pi/.homeassistant/'
 '/home/pi/www/'
+'/home/pi/startup.sh'
 )
 EXCLUDES=(
 '*/.uuid'
