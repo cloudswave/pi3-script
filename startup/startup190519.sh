@@ -5,14 +5,20 @@ logit(){
 }
 cd /home/pi
 # koe
-logit "samba aria2c kode start"
+logit "samba aria2c start"
 /etc/init.d/samba restart &
 aria2c --conf-path="/home/pi/pi3-script/aria2/aria2.conf" -D &
-/etc/init.d/php7.0-fpm restart &
-/etc/init.d/nginx restart &
+
 logit "homeassistan start"
 nohup /home/pi/homeassistant/bin/hass -c "/home/pi/.homeassistant" >> /dev/null &
 
 # 监控frpc进程
 logit "frpc start"
 nohup ./bin/monitor.sh >> /dev/null &
+
+logit "php nginx start"
+/etc/init.d/php7.0-fpm restart &
+/etc/init.d/nginx restart &
+sleep 5
+logit "chown -R pi:pi /run/php/"
+chown -R pi:pi /run/php/ &

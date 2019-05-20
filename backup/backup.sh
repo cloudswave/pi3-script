@@ -1,21 +1,28 @@
 #！/bin/sh
+#备份存放路径
 TARGET_DIR=/media/pi/DA18-EBFA/pi-backup
+#要备份的文件列表
 BACKUP_FOLDERS=(
-'/home/pi/bin/'
-'/home/pi/.homeassistant/'
-'/home/pi/www/'
-'/home/pi/startup.sh'
+    '/home/pi/pi3-script/frpc'
+    '/home/pi/pi3-script/startup'
+    '/home/pi/.homeassistant/'
+    '/home/pi/www/'
 )
+#排除的文件列表
 EXCLUDES=(
-'*/.uuid'
-'*/home-assistant_v2.db'
-'*/tts'
-'*/tts'
-'*/__pycache__'
-'*/*.log'
-'*/backup'
-'*/temp'
-'*/session'
+    '*/.cloud'
+    '*/.storage'
+    '*/deps'
+    '*/.uuid'
+    '*/home-assistant_v2.db'
+    '*/tts'
+    '*/tts'
+    '*/__pycache__'
+    '*/*.log'
+    '*/backup'
+    '*/temp'
+    '*/session'
+    '*/recycle_kod'
 )
 
 
