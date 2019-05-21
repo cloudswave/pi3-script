@@ -16,9 +16,13 @@ nohup /home/pi/homeassistant/bin/hass -c "/home/pi/.homeassistant" >> /dev/null 
 logit "frpc start"
 nohup ./bin/monitor.sh >> /dev/null &
 
+#syncthing
+logit "syncthing start"
+nohup ./bin/syncthing/syncthing >> /dev/null &
+
 logit "php nginx start"
 /etc/init.d/php7.0-fpm restart &
 /etc/init.d/nginx restart &
 sleep 5
 logit "chown -R pi:pi /run/php/"
-chown -R pi:pi /run/php/ &
+sudo chown -R pi:pi /run/php/ &

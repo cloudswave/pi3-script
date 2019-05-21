@@ -16,6 +16,5 @@ _IP=$(hostname -I) || true
 if [ "$_IP" ]; then
   printf "My IP address is %s\n" "$_IP"
 fi
-echo `date`:startup.sh exec >> /home/pi/startup.log
-bash /home/pi/startup.sh
+su pi -c "exec /home/pi/startup.sh" #以pi用户身份运行脚本
 exit 0
