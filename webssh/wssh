@@ -1,0 +1,3 @@
+#!/usr/bin/python
+from webssh.main import main
+main()

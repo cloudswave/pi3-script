@@ -7,10 +7,14 @@ cd /home/pi
 # koe
 logit "samba aria2c start"
 /etc/init.d/samba restart &
-aria2c --conf-path="/home/pi/pi3-script/aria2/aria2.conf" -D &
+#aria2c --conf-path="/home/pi/pi3-script/aria2/aria2.conf" -D &
+qbittorrent-nox --webui-port=8081 -d
 
 logit "homeassistan start"
 nohup /home/pi/homeassistant/bin/hass -c "/home/pi/.homeassistant" >> /dev/null &
+
+logit "webssh start"
+screen -dmS wssh ./bin/wssh
 
 # 监控frpc进程
 logit "frpc start"
