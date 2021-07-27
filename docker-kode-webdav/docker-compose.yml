@@ -1,0 +1,81 @@
+version: '3.5'
+
+services:
+  db:
+    image: mariadb
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    restart: always
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./app/initdb.d:/docker-entrypoint-initdb.d
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE_FILE=/run/secrets/mysql_db
+      - MYSQL_USER_FILE=/run/secrets/mysql_user
+      - MYSQL_PASSWORD_FILE=/run/secrets/mysql_password
+    secrets:
+      - mysql_db
+      - mysql_password
+      - mysql_user
+
+  app:
+    build: ./app
+    volumes:
+      - ./www:/var/www/html
+      - /media:/media/pi-media # 可以挂载移动硬盘
+      - /home/pi:/media/pi-home
+    environment:
+      - MYSQL_SERVER=db
+      - MYSQL_DATABASE_FILE=/run/secrets/mysql_db
+      - MYSQL_USER_FILE=/run/secrets/mysql_user
+      - MYSQL_PASSWORD_FILE=/run/secrets/mysql_password
+      - SESSION_HOST=redis
+        #- KODBOX_ADMIN_USER=/run/secrets/kodbox_admin_user
+        #- KODBOX_ADMIN_PASSWORD=/run/secrets/kodbox_admin_password
+    restart: always
+    secrets:
+      - mysql_db
+      - mysql_password
+      - mysql_user
+      - kodbox_admin_user
+      - kodbox_admin_password
+
+  redis:
+    image: redis:alpine
+    environment:
+      - TZ=Asia/Shanghai
+    restart: always
+    volumes:
+      - ./redis:/data
+
+  web:
+    image: nginx:alpine
+    restart: always
+    ports:
+      - 1380:80
+      - 1443:443
+    volumes:
+            #- /data/logs/nginx/kodbox:/var/log/nginx/kodbox
+      - ./web/sslcerts:/etc/sslcerts:ro
+      - ./www:/var/www/html/kodbox:ro
+      - ./web/conf.d:/etc/nginx/conf.d
+      - ./web/nginx.conf:/etc/nginx/nginx.conf
+
+secrets:
+  mysql_db:
+    file: ./app/mysql_db.txt
+  mysql_password:
+    file: ./app/mysql_password.txt
+  mysql_user:
+    file: ./app/mysql_user.txt
+  kodbox_admin_user:
+    file: ./app/kodbox_admin_user.txt
+  kodbox_admin_password:
+    file: ./app/kodbox_admin_password.txt
+
+volumes:
+  db:
+  nextcloud:
+  html:
+
