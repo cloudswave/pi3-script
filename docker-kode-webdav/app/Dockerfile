@@ -124,4 +124,4 @@ RUN set -ex; \
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["php-fpm"]
+CMD ["php-fpm","-R"] # as ROOT

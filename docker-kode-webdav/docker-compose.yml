@@ -1,4 +1,4 @@
-version: '3.5'
+version: '3.6'
 
 services:
   db:
@@ -21,10 +21,14 @@ services:
 
   app:
     build: ./app
+    command: 
+      - php-fpm
+      - -R
     volumes:
       - ./www:/var/www/html
       - /media:/media/pi-media # 可以挂载移动硬盘
       - /home/pi:/media/pi-home
+      - ./app/php-fpm.conf:/usr/local/etc/php-fpm.conf # root运行配置文件
     environment:
       - MYSQL_SERVER=db
       - MYSQL_DATABASE_FILE=/run/secrets/mysql_db

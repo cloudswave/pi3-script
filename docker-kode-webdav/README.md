@@ -8,6 +8,7 @@
 	|-- app  # kodbox镜像构建及初始化脚本
 		|-- Dockerfile  # kodbox 镜像构建文件
 		|-- entrypoint.sh
+		|-- php-fpm.conf # root用户运行的php-fpm配置文件
 		|-- initdb.d  # 数据库初始化脚本
 		|-- mysql_db.txt
 		|-- mysql_password.txt  # 数据库密码，请修改
@@ -26,7 +27,8 @@ git clone https://github.com/evling2020/kodbox.git
 docker-compose build
 docker-compose up -d
 ```
-
+## 注意
+如果想让kodbox具有root权限来操作磁盘文件，需要使用php-fpm.conf文件
 
 
 ## 参考
