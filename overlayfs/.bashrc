@@ -118,6 +118,7 @@ function reboot_rw(){
   sudo reboot
 }
 function reboot_ro() {
+  sudo mount -o remount,rw /boot
   sudo sed -i 's/\($\)/ init=\/sbin\/overlayRoot.sh/g' /boot/cmdline.txt
   sudo reboot
 }
